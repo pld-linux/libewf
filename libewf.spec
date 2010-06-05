@@ -1,14 +1,13 @@
 Summary:	Library and tools to support the Expert Witness Compression Format
 Summary(pl.UTF-8):	Biblioteka i narzędzia obsługujące format Expert Witness Compression Format
 Name:		libewf
-Version:	20080501
-Release:	2
+Version:	20100226
+Release:	1
 License:	BSD
 Group:		Libraries
-Source0:	http://www.uitwisselplatform.nl/frs/download.php/529/%{name}-%{version}.tar.gz
-# Source0-md5:	be28a11d32ca72c328b081d38849d5bd
-Patch0:		%{name}-link.patch
-URL:		http://www.uitwisselplatform.nl/projects/libewf/
+Source0:	http://downloads.sourceforge.net/project/libewf/libewf/%{name}-%{version}/libewf-%{version}.tar.gz
+# Source0-md5:	a697d629bb74df1fa68f22658634fdb9
+URL:		http://sourceforge.net/projects/libewf/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
 BuildRequires:	libtool
@@ -56,7 +55,6 @@ Statyczna biblioteka libewf.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__libtoolize}
@@ -89,7 +87,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc doc/header*.txt
+%doc documents/header*.txt
 %attr(755,root,root) %{_libdir}/libewf.so
 %{_libdir}/libewf.la
 %{_includedir}/libewf
