@@ -1,0 +1,114 @@
+--- libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/ewfacquire.c.orig	2015-01-14 08:44:40.000000000 +0100
++++ libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/ewfacquire.c	2015-01-25 08:42:59.093079450 +0100
+@@ -26,6 +26,9 @@
+ #if defined( HAVE_STDLIB_H ) || defined( WINAPI )
+ #include <stdlib.h>
+ #endif
++#if defined( HAVE_UNISTD_H )
++#include <unistd.h>
++#endif
+ 
+ #include "byte_size_string.h"
+ #include "device_handle.h"
+--- libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/ewfacquirestream.c.orig	2015-01-14 08:44:40.000000000 +0100
++++ libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/ewfacquirestream.c	2015-01-25 09:39:58.312935929 +0100
+@@ -30,6 +30,9 @@
+ #if defined( HAVE_STDLIB_H ) || defined( WINAPI )
+ #include <stdlib.h>
+ #endif
++#if defined( HAVE_UNISTD_H )
++#include <unistd.h>
++#endif
+ 
+ #include "byte_size_string.h"
+ #include "ewfcommon.h"
+@@ -323,7 +326,7 @@ ssize_t ewfacquirestream_read_chunk(
+ 
+ 		while( read_number_of_errors <= read_error_retries )
+ 		{
+-			read_count = libcsystem_file_io_read(
++			read_count = read(
+ 			              input_file_descriptor,
+ 			              &( buffer[ buffer_offset + read_error_offset ] ),
+ 			              bytes_to_read );
+--- libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/ewfdebug.c.orig	2015-01-14 08:44:40.000000000 +0100
++++ libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/ewfdebug.c	2015-01-25 09:40:21.596268288 +0100
+@@ -26,6 +26,9 @@
+ #if defined( HAVE_STDLIB_H ) || defined( WINAPI )
+ #include <stdlib.h>
+ #endif
++#if defined( HAVE_UNISTD_H )
++#include <unistd.h>
++#endif
+ 
+ #if defined( HAVE_GLOB_H )
+ #include <glob.h>
+--- libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/ewfexport.c.orig	2015-01-14 08:44:40.000000000 +0100
++++ libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/ewfexport.c	2015-01-25 09:40:45.122933951 +0100
+@@ -26,6 +26,9 @@
+ #if defined( HAVE_STDLIB_H ) || defined( WINAPI )
+ #include <stdlib.h>
+ #endif
++#if defined( HAVE_UNISTD_H )
++#include <unistd.h>
++#endif
+ 
+ #if defined( HAVE_SYS_RESOURCE_H )
+ #include <sys/resource.h>
+--- libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/ewfinfo.c.orig	2015-01-14 08:44:40.000000000 +0100
++++ libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/ewfinfo.c	2015-01-25 09:41:47.342931361 +0100
+@@ -26,6 +26,9 @@
+ #if defined( HAVE_STDLIB_H ) || defined( WINAPI )
+ #include <stdlib.h>
+ #endif
++#if defined( HAVE_UNISTD_H )
++#include <unistd.h>
++#endif
+ 
+ #if defined( HAVE_SYS_RESOURCE_H )
+ #include <sys/resource.h>
+--- libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/ewfrecover.c.orig	2015-01-14 08:44:40.000000000 +0100
++++ libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/ewfrecover.c	2015-01-25 09:42:07.626263849 +0100
+@@ -26,6 +26,9 @@
+ #if defined( HAVE_STDLIB_H ) || defined( WINAPI )
+ #include <stdlib.h>
+ #endif
++#if defined( HAVE_UNISTD_H )
++#include <unistd.h>
++#endif
+ 
+ #if defined( HAVE_SYS_RESOURCE_H )
+ #include <sys/resource.h>
+--- libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/ewfverify.c.orig	2015-01-14 08:44:40.000000000 +0100
++++ libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/ewfverify.c	2015-01-25 09:42:24.279596329 +0100
+@@ -26,6 +26,9 @@
+ #if defined( HAVE_STDLIB_H ) || defined( WINAPI )
+ #include <stdlib.h>
+ #endif
++#if defined( HAVE_UNISTD_H )
++#include <unistd.h>
++#endif
+ 
+ #if defined( HAVE_SYS_RESOURCE_H )
+ #include <sys/resource.h>
+--- libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/export_handle.c.orig	2015-01-14 08:44:40.000000000 +0100
++++ libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/ewftools/export_handle.c	2015-01-25 09:41:23.036265740 +0100
+@@ -1311,7 +1311,7 @@ ssize_t export_handle_write_buffer(
+ 	{
+ 		if( export_handle->use_stdout != 0 )
+ 		{
+-			write_count = libcsystem_file_io_write(
++			write_count = write(
+ 			               1,
+ 				       storage_media_buffer->raw_buffer,
+ 				       write_size );
+--- libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/libewf/libewf_case_data.c.orig	2015-01-14 08:44:40.000000000 +0100
++++ libewf-f5aa33eaa9f93c60a9005c46c6afe88d8a46645e/libewf/libewf_case_data.c	2015-01-25 08:47:09.853068905 +0100
+@@ -28,6 +28,7 @@
+ #include "libewf_header_values.h"
+ #include "libewf_libcerror.h"
+ #include "libewf_libcnotify.h"
++#include "libewf_libcstring.h"
+ #include "libewf_libfvalue.h"
+ #include "libewf_libuna.h"
+ #include "libewf_media_values.h"
