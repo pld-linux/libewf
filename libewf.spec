@@ -8,7 +8,7 @@ Name:		libewf
 # see AC_INIT in configure.ac
 Version:	20150107
 %define	gitrev	f5aa33eaa9f93c60a9005c46c6afe88d8a46645e
-Release:	1
+Release:	2
 License:	LGPL v3+
 Group:		Libraries
 Source0:	https://github.com/libyal/libewf/archive/%{gitrev}/%{name}-%{version}.tar.gz
