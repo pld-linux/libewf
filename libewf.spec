@@ -1,53 +1,97 @@
 #
 # Conditional build:
-%bcond_without	python	# Python bindings
+%bcond_without	python	# Python bindings (any)
+%bcond_without	python2	# CPython 2.x bindings
+%bcond_without	python3	# CPython 3.x bindings
 #
+%if %{without python}
+%undefine	with_python2
+%undefine	with_python3
+%endif
+# see m4/${libname}.m4 />= for required version of particular library
+%define		libbfio_ver		20160108
+%define		libcaes_ver		20161025
+%define		libcdata_ver		20160108
+%define		libcdatetime_ver	20141018
+%define		libcerror_ver		20120425
+%define		libcfile_ver		20160409
+%define		libclocale_ver		20120425
+%define		libcnotify_ver		20120425
+%define		libcpath_ver		20120701
+%define		libcsplit_ver		20120701
+%define		libcthreads_ver		20160404
+%define		libfcache_ver		20140912
+%define		libfdata_ver		20160325
+%define		libfguid_ver		20120426
+%define		libfvalue_ver		20160131
+%define		libhmac_ver		20160802
+%define		libodraw_ver		20120630
+%define		libsmdev_ver		20140406
+%define		libsmraw_ver		20120630
+%define		libuna_ver		20120425
 Summary:	Library to support the Expert Witness Compression Format
 Summary(pl.UTF-8):	Biblioteka obsługująca format Expert Witness Compression Format
 Name:		libewf
-# see AC_INIT in configure.ac
-Version:	20150107
-%define	gitrev	f5aa33eaa9f93c60a9005c46c6afe88d8a46645e
-Release:	3
+Version:	20171104
+Release:	1
 License:	LGPL v3+
 Group:		Libraries
-Source0:	https://github.com/libyal/libewf/archive/%{gitrev}/%{name}-%{version}.tar.gz
-# Source0-md5:	24ede215847822fe86a88a6ce77fac4a
-Patch0:		%{name}-system-libs.patch
-Patch1:		%{name}-includes.patch
+#Source0Download: https://github.com/libyal/libewf/releases
+Source0:	https://github.com/libyal/libewf/releases/download/%{version}/%{name}-experimental-%{version}.tar.gz
+# Source0-md5:	1d64ca734b4dd07d0b793a855db5c31f
+Patch0:		%{name}-libcpath.patch
 URL:		https://github.com/libyal/libewf/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake >= 1.6
 BuildRequires:	bzip2-devel >= 1.0
 BuildRequires:	gettext-tools >= 0.18.1
-BuildRequires:	libbfio-devel >= 20120426
-BuildRequires:	libcaes-devel >= 20130716
-BuildRequires:	libcdata-devel >= 20150102
-BuildRequires:	libcdatetime-devel >= 20141018
-BuildRequires:	libcerror-devel >= 20120425
-BuildRequires:	libcfile-devel >= 20140503
-BuildRequires:	libclocale-devel >= 20120425
-BuildRequires:	libcnotify-devel >= 20120425
-BuildRequires:	libcpath-devel >= 20120701
-BuildRequires:	libcsplit-devel >= 20120701
+BuildRequires:	libbfio-devel >= %{libbfio_ver}
+BuildRequires:	libcaes-devel >= %{libcaes_ver}
+BuildRequires:	libcdata-devel >= %{libcdata_ver}
+BuildRequires:	libcdatetime-devel >= %{libcdatetime_ver}
+BuildRequires:	libcerror-devel >= %{libcerror_ver}
+BuildRequires:	libcfile-devel >= %{libcfile_ver}
+BuildRequires:	libclocale-devel >= %{libclocale_ver}
+BuildRequires:	libcnotify-devel >= %{libcnotify_ver}
+BuildRequires:	libcpath-devel >= %{libcpath_ver}
+BuildRequires:	libcsplit-devel >= %{libcsplit_ver}
 BuildRequires:	libcstring-devel >= 20120425
 BuildRequires:	libcsystem-devel >= 20141018
-BuildRequires:	libcthreads-devel >= 20130509
-BuildRequires:	libfcache-devel >= 20140601
-BuildRequires:	libfdata-devel >= 20140915
+BuildRequires:	libcthreads-devel >= %{libcthreads_ver}
+BuildRequires:	libfcache-devel >= %{libfcache_ver}
+BuildRequires:	libfdata-devel >= %{libfdata_ver}
+BuildRequires:	libfguid-devel >= %{libfguid_ver}
 BuildRequires:	libfuse-devel >= 2.6
-BuildRequires:	libfvalue-devel >= 20130415
-BuildRequires:	libhmac-devel >= 20130714
-BuildRequires:	libodraw-devel >= 20120630
-BuildRequires:	libsmdev-devel >= 20140406
-BuildRequires:	libsmraw-devel >= 20120630
-BuildRequires:	libuna-devel >= 20120425
+BuildRequires:	libfvalue-devel >= %{libfvalue_ver}
+BuildRequires:	libhmac-devel >= %{libhmac_ver}
+BuildRequires:	libodraw-devel >= %{libodraw_ver}
+BuildRequires:	libsmdev-devel >= %{libsmdev_ver}
+BuildRequires:	libsmraw-devel >= %{libsmraw_ver}
+BuildRequires:	libuna-devel >= %{libuna_ver}
 BuildRequires:	libtool
 BuildRequires:	libuuid-devel >= 2.20
 BuildRequires:	openssl-devel >= 1.0
-%{?with_python:BuildRequires:	python-devel >= 1:2.5}
-BuildRequires:	sed >= 4.0
+%{?with_python2:BuildRequires:	python-devel >= 1:2.5}
+%{?with_python3:BuildRequires:	python3-devel >= 1:3.2}
 BuildRequires:	zlib-devel >= 1.2.5
+Requires:	bzip2 >= 1.0
+Requires:	libbfio >= %{libbfio_ver}
+Requires:	libcaes >= %{libcaes_ver}
+Requires:	libcdata >= %{libcdata_ver}
+Requires:	libcerror >= %{libcerror_ver}
+Requires:	libcfile >= %{libcfile_ver}
+Requires:	libclocale >= %{libclocale_ver}
+Requires:	libcnotify >= %{libcnotify_ver}
+Requires:	libcpath >= %{libcpath_ver}
+Requires:	libcsplit >= %{libcsplit_ver}
+Requires:	libcthreads >= %{libcthreads_ver}
+Requires:	libfcache >= %{libfcache_ver}
+Requires:	libfdata >= %{libfdata_ver}
+Requires:	libfguid >= %{libfguid_ver}
+Requires:	libfvalue >= %{libfvalue_ver}
+Requires:	libhmac >= %{libhmac_ver}
+Requires:	libuna >= %{libuna_ver}
+Requires:	zlib >= 1.2.5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -68,21 +112,23 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libewf
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	bzip2-devel >= 1.0
-Requires:	libbfio-devel >= 20120426
-Requires:	libcaes-devel >= 20130716
-Requires:	libcdata-devel >= 20150102
-Requires:	libcerror-devel >= 20120425
-Requires:	libcfile-devel >= 20140503
-Requires:	libclocale-devel >= 20120425
-Requires:	libcnotify-devel >= 20120425
-Requires:	libcpath-devel >= 20120701
-Requires:	libcsplit-devel >= 20120701
+Requires:	libbfio-devel >= %{libbfio_ver}
+Requires:	libcaes-devel >= %{libcaes_ver}
+Requires:	libcdata-devel >= %{libcdata_ver}
+Requires:	libcerror-devel >= %{libcerror_ver}
+Requires:	libcfile-devel >= %{libcfile_ver}
+Requires:	libclocale-devel >= %{libclocale_ver}
+Requires:	libcnotify-devel >= %{libcnotify_ver}
+Requires:	libcpath-devel >= %{libcpath_ver}
+Requires:	libcsplit-devel >= %{libcsplit_ver}
 Requires:	libcstring-devel >= 20120425
-Requires:	libcthreads-devel >= 20130509
-Requires:	libfcache-devel >= 20140601
-Requires:	libfvalue-devel >= 20130415
-Requires:	libhmac-devel >= 20130714
-Requires:	libuna-devel >= 20120425
+Requires:	libcthreads-devel >= %{libcthreads_ver}
+Requires:	libfcache-devel >= %{libfcache_ver}
+Requires:	libfdata-devel >= %{libfdata_ver}
+Requires:	libfguid-devel >= %{libfguid_ver}
+Requires:	libfvalue-devel >= %{libfvalue_ver}
+Requires:	libhmac-devel >= %{libhmac_ver}
+Requires:	libuna-devel >= %{libuna_ver}
 Requires:	openssl-devel >= 1.0
 Requires:	zlib-devel >= 1.2.5
 
@@ -109,12 +155,13 @@ Summary:	Tools to support the Expert Witness Compression Format
 Summary(pl.UTF-8):	Narzędzia obsługujące format Expert Witness Compression Format
 Group:		Applications/File
 Requires:	%{name} = %{version}-%{release}
-Requires:	libcdatetime-devel >= 20141018
+Requires:	libcdatetime >= %{libcdatetime_ver}
 Requires:	libcsystem >= 20141018
 Requires:	libfuse >= 2.6
-Requires:	libodraw >= 20120630
-Requires:	libsmdev >= 20140406
-Requires:	libsmraw >= 20120630
+Requires:	libodraw >= %{libodraw_ver}
+Requires:	libsmdev >= %{libsmdev_ver}
+Requires:	libsmraw >= %{libsmraw_ver}
+Requires:	libuuid >= 2.20
 
 %description tools
 Tools to support the Expert Witness Compression Format.
@@ -123,32 +170,43 @@ Tools to support the Expert Witness Compression Format.
 Narzędzia obsługujące format Expert Witness Compression Format.
 
 %package -n python-pyewf
-Summary:	Python bindings for libewf library
-Summary(pl.UTF-8):	Wiązania Pythona do biblioteki libewf
+Summary:	Python 2 bindings for libewf library
+Summary(pl.UTF-8):	Wiązania Pythona 2 do biblioteki libewf
 Group:		Libraries/Python
 Requires:	%{name} = %{version}-%{release}
 
 %description -n python-pyewf
-Python bindings for libewf library.
+Python 2 bindings for libewf library.
 
 %description -n python-pyewf -l pl.UTF-8
-Wiązania Pythona do biblioteki libewf.
+Wiązania Pythona 2 do biblioteki libewf.
+
+%package -n python3-pyewf
+Summary:	Python 3 bindings for libewf library
+Summary(pl.UTF-8):	Wiązania Pythona 3 do biblioteki libewf
+Group:		Libraries/Python
+Requires:	%{name} = %{version}-%{release}
+
+%description -n python3-pyewf
+Python 3 bindings for libewf library.
+
+%description -n python3-pyewf -l pl.UTF-8
+Wiązania Pythona 3 do biblioteki libewf.
 
 %prep
-%setup -q -n %{name}-%{gitrev}
+%setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__gettextize}
-%{__sed} -i -e 's/ po\/Makefile.in//' configure.ac
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__autoheader}
 %{__automake}
 %configure \
-	%{?with_python:--enable-python}
+	%{?with_python2:--enable-python2} \
+	%{?with_python3:--enable-python3}
 %{__make}
 
 %install
@@ -160,8 +218,11 @@ rm -rf $RPM_BUILD_ROOT
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libewf.la
 
-%if %{with python}
+%if %{with python2}
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/pyewf.{la,a}
+%endif
+%if %{with python3}
+%{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/pyewf.{la,a}
 %endif
 
 %clean
@@ -174,11 +235,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS COPYING ChangeLog NEWS
 %attr(755,root,root) %{_libdir}/libewf.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libewf.so.2
+%attr(755,root,root) %ghost %{_libdir}/libewf.so.3
 
 %files devel
 %defattr(644,root,root,755)
-%doc documents/header*.txt
 %attr(755,root,root) %{_libdir}/libewf.so
 %{_includedir}/libewf
 %{_includedir}/libewf.h
@@ -207,8 +267,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/ewfrecover.1*
 %{_mandir}/man1/ewfverify.1*
 
-%if %{with python}
+%if %{with python2}
 %files -n python-pyewf
 %defattr(644,root,root,755)
 %attr(755,root,root) %{py_sitedir}/pyewf.so
+%endif
+
+%if %{with python3}
+%files -n python3-pyewf
+%defattr(644,root,root,755)
+%attr(755,root,root) %{py3_sitedir}/pyewf.so
 %endif
