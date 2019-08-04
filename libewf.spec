@@ -33,7 +33,7 @@ Summary:	Library to support the Expert Witness Compression Format
 Summary(pl.UTF-8):	Biblioteka obsługująca format Expert Witness Compression Format
 Name:		libewf
 Version:	20171104
-Release:	1
+Release:	2
 License:	LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/libyal/libewf/releases
@@ -55,8 +55,6 @@ BuildRequires:	libclocale-devel >= %{libclocale_ver}
 BuildRequires:	libcnotify-devel >= %{libcnotify_ver}
 BuildRequires:	libcpath-devel >= %{libcpath_ver}
 BuildRequires:	libcsplit-devel >= %{libcsplit_ver}
-BuildRequires:	libcstring-devel >= 20120425
-BuildRequires:	libcsystem-devel >= 20141018
 BuildRequires:	libcthreads-devel >= %{libcthreads_ver}
 BuildRequires:	libfcache-devel >= %{libfcache_ver}
 BuildRequires:	libfdata-devel >= %{libfdata_ver}
@@ -121,7 +119,6 @@ Requires:	libclocale-devel >= %{libclocale_ver}
 Requires:	libcnotify-devel >= %{libcnotify_ver}
 Requires:	libcpath-devel >= %{libcpath_ver}
 Requires:	libcsplit-devel >= %{libcsplit_ver}
-Requires:	libcstring-devel >= 20120425
 Requires:	libcthreads-devel >= %{libcthreads_ver}
 Requires:	libfcache-devel >= %{libfcache_ver}
 Requires:	libfdata-devel >= %{libfdata_ver}
@@ -156,7 +153,6 @@ Summary(pl.UTF-8):	Narzędzia obsługujące format Expert Witness Compression Fo
 Group:		Applications/File
 Requires:	%{name} = %{version}-%{release}
 Requires:	libcdatetime >= %{libcdatetime_ver}
-Requires:	libcsystem >= 20141018
 Requires:	libfuse >= 2.6
 Requires:	libodraw >= %{libodraw_ver}
 Requires:	libsmdev >= %{libsmdev_ver}
