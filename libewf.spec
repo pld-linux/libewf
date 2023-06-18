@@ -9,42 +9,42 @@
 %undefine	with_python3
 %endif
 # see m4/${libname}.m4 />= for required version of particular library
-%define		libbfio_ver		20160108
-%define		libcaes_ver		20161025
-%define		libcdata_ver		20160108
+%define		libbfio_ver		20201125
+%define		libcaes_ver		20220529
+%define		libcdata_ver		20230108
 %define		libcdatetime_ver	20141018
 %define		libcerror_ver		20120425
 %define		libcfile_ver		20160409
 %define		libclocale_ver		20120425
 %define		libcnotify_ver		20120425
-%define		libcpath_ver		20120701
+%define		libcpath_ver		20180716
 %define		libcsplit_ver		20120701
 %define		libcthreads_ver		20160404
-%define		libfcache_ver		20140912
-%define		libfdata_ver		20160325
+%define		libfcache_ver		20191109
+%define		libfdata_ver		20201129
+%define		libfdatetime_ver	20180910
 %define		libfguid_ver		20120426
-%define		libfvalue_ver		20160131
-%define		libhmac_ver		20160802
+%define		libfvalue_ver		20200711
+%define		libhmac_ver		20200104
 %define		libodraw_ver		20120630
 %define		libsmdev_ver		20140406
 %define		libsmraw_ver		20120630
-%define		libuna_ver		20120425
+%define		libuna_ver		20210801
 Summary:	Library to support the Expert Witness Compression Format
 Summary(pl.UTF-8):	Biblioteka obsługująca format Expert Witness Compression Format
 Name:		libewf
-Version:	20171104
-Release:	6
+Version:	20230212
+Release:	1
 License:	LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/libyal/libewf/releases
 Source0:	https://github.com/libyal/libewf/releases/download/%{version}/%{name}-experimental-%{version}.tar.gz
-# Source0-md5:	1d64ca734b4dd07d0b793a855db5c31f
-Patch0:		%{name}-libcpath.patch
+# Source0-md5:	a3f85c4cefc0b760858ea357093b63a2
 URL:		https://github.com/libyal/libewf/
-BuildRequires:	autoconf >= 2.59
+BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake >= 1.6
 BuildRequires:	bzip2-devel >= 1.0
-BuildRequires:	gettext-tools >= 0.18.1
+BuildRequires:	gettext-tools >= 0.21
 BuildRequires:	libbfio-devel >= %{libbfio_ver}
 BuildRequires:	libcaes-devel >= %{libcaes_ver}
 BuildRequires:	libcdata-devel >= %{libcdata_ver}
@@ -58,6 +58,7 @@ BuildRequires:	libcsplit-devel >= %{libcsplit_ver}
 BuildRequires:	libcthreads-devel >= %{libcthreads_ver}
 BuildRequires:	libfcache-devel >= %{libfcache_ver}
 BuildRequires:	libfdata-devel >= %{libfdata_ver}
+BuildRequires:	libfdatetime-devel >= %{libfdatetime_ver}
 BuildRequires:	libfguid-devel >= %{libfguid_ver}
 BuildRequires:	libfuse-devel >= 2.6
 BuildRequires:	libfvalue-devel >= %{libfvalue_ver}
@@ -66,7 +67,7 @@ BuildRequires:	libodraw-devel >= %{libodraw_ver}
 BuildRequires:	libsmdev-devel >= %{libsmdev_ver}
 BuildRequires:	libsmraw-devel >= %{libsmraw_ver}
 BuildRequires:	libuna-devel >= %{libuna_ver}
-BuildRequires:	libtool
+BuildRequires:	libtool >= 2:2
 BuildRequires:	libuuid-devel >= 2.20
 BuildRequires:	openssl-devel >= 1.0
 %{?with_python2:BuildRequires:	python-devel >= 1:2.5}
@@ -85,6 +86,7 @@ Requires:	libcsplit >= %{libcsplit_ver}
 Requires:	libcthreads >= %{libcthreads_ver}
 Requires:	libfcache >= %{libfcache_ver}
 Requires:	libfdata >= %{libfdata_ver}
+Requires:	libfdatetime >= %{libfdatetime_ver}
 Requires:	libfguid >= %{libfguid_ver}
 Requires:	libfvalue >= %{libfvalue_ver}
 Requires:	libhmac >= %{libhmac_ver}
@@ -122,6 +124,7 @@ Requires:	libcsplit-devel >= %{libcsplit_ver}
 Requires:	libcthreads-devel >= %{libcthreads_ver}
 Requires:	libfcache-devel >= %{libfcache_ver}
 Requires:	libfdata-devel >= %{libfdata_ver}
+Requires:	libfdatetime-devel >= %{libfdatetime_ver}
 Requires:	libfguid-devel >= %{libfguid_ver}
 Requires:	libfvalue-devel >= %{libfvalue_ver}
 Requires:	libhmac-devel >= %{libhmac_ver}
@@ -191,7 +194,6 @@ Wiązania Pythona 3 do biblioteki libewf.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__gettextize}
