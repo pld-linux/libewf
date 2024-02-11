@@ -29,17 +29,17 @@
 %define		libodraw_ver		20120630
 %define		libsmdev_ver		20140406
 %define		libsmraw_ver		20120630
-%define		libuna_ver		20210801
+%define		libuna_ver		20230702
 Summary:	Library to support the Expert Witness Compression Format
 Summary(pl.UTF-8):	Biblioteka obsługująca format Expert Witness Compression Format
 Name:		libewf
-Version:	20230212
+Version:	20231119
 Release:	1
 License:	LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/libyal/libewf/releases
 Source0:	https://github.com/libyal/libewf/releases/download/%{version}/%{name}-experimental-%{version}.tar.gz
-# Source0-md5:	a3f85c4cefc0b760858ea357093b63a2
+# Source0-md5:	9a8a2dc9fa7023e3c7144dcf3cdb256f
 URL:		https://github.com/libyal/libewf/
 BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake >= 1.6
