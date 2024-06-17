@@ -1,11 +1,9 @@
 #
 # Conditional build:
 %bcond_without	python	# Python bindings (any)
-%bcond_without	python2	# CPython 2.x bindings
 %bcond_without	python3	# CPython 3.x bindings
 #
 %if %{without python}
-%undefine	with_python2
 %undefine	with_python3
 %endif
 # see m4/${libname}.m4 />= for required version of particular library
@@ -33,17 +31,17 @@
 Summary:	Library to support the Expert Witness Compression Format
 Summary(pl.UTF-8):	Biblioteka obsługująca format Expert Witness Compression Format
 Name:		libewf
-Version:	20231119
+Version:	20240506
 Release:	1
 License:	LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/libyal/libewf/releases
 Source0:	https://github.com/libyal/libewf/releases/download/%{version}/%{name}-experimental-%{version}.tar.gz
-# Source0-md5:	9a8a2dc9fa7023e3c7144dcf3cdb256f
+# Source0-md5:	34fffa484e688224e7d16fa8e8974ff1
 URL:		https://github.com/libyal/libewf/
 BuildRequires:	autoconf >= 2.71
 BuildRequires:	automake >= 1.6
-BuildRequires:	bzip2-devel >= 1.0
+BuildRequires:	bzip2-devel >= 1.0.6
 BuildRequires:	gettext-tools >= 0.21
 BuildRequires:	libbfio-devel >= %{libbfio_ver}
 BuildRequires:	libcaes-devel >= %{libcaes_ver}
@@ -60,7 +58,8 @@ BuildRequires:	libfcache-devel >= %{libfcache_ver}
 BuildRequires:	libfdata-devel >= %{libfdata_ver}
 BuildRequires:	libfdatetime-devel >= %{libfdatetime_ver}
 BuildRequires:	libfguid-devel >= %{libfguid_ver}
-BuildRequires:	libfuse-devel >= 2.6
+# or libfuse >= 2.6
+BuildRequires:	libfuse3-devel >= 3.0
 BuildRequires:	libfvalue-devel >= %{libfvalue_ver}
 BuildRequires:	libhmac-devel >= %{libhmac_ver}
 BuildRequires:	libodraw-devel >= %{libodraw_ver}
@@ -70,10 +69,9 @@ BuildRequires:	libuna-devel >= %{libuna_ver}
 BuildRequires:	libtool >= 2:2
 BuildRequires:	libuuid-devel >= 2.20
 BuildRequires:	openssl-devel >= 1.0
-%{?with_python2:BuildRequires:	python-devel >= 1:2.5}
 %{?with_python3:BuildRequires:	python3-devel >= 1:3.2}
 BuildRequires:	zlib-devel >= 1.2.5
-Requires:	bzip2 >= 1.0
+Requires:	bzip2 >= 1.0.6
 Requires:	libbfio >= %{libbfio_ver}
 Requires:	libcaes >= %{libcaes_ver}
 Requires:	libcdata >= %{libcdata_ver}
@@ -111,7 +109,7 @@ Summary:	Header files for libewf library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libewf
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	bzip2-devel >= 1.0
+Requires:	bzip2-devel >= 1.0.6
 Requires:	libbfio-devel >= %{libbfio_ver}
 Requires:	libcaes-devel >= %{libcaes_ver}
 Requires:	libcdata-devel >= %{libcdata_ver}
@@ -156,7 +154,7 @@ Summary(pl.UTF-8):	Narzędzia obsługujące format Expert Witness Compression Fo
 Group:		Applications/File
 Requires:	%{name} = %{version}-%{release}
 Requires:	libcdatetime >= %{libcdatetime_ver}
-Requires:	libfuse >= 2.6
+Requires:	libfuse3 >= 3.0
 Requires:	libodraw >= %{libodraw_ver}
 Requires:	libsmdev >= %{libsmdev_ver}
 Requires:	libsmraw >= %{libsmraw_ver}
@@ -167,18 +165,6 @@ Tools to support the Expert Witness Compression Format.
 
 %description tools -l pl.UTF-8
 Narzędzia obsługujące format Expert Witness Compression Format.
-
-%package -n python-pyewf
-Summary:	Python 2 bindings for libewf library
-Summary(pl.UTF-8):	Wiązania Pythona 2 do biblioteki libewf
-Group:		Libraries/Python
-Requires:	%{name} = %{version}-%{release}
-
-%description -n python-pyewf
-Python 2 bindings for libewf library.
-
-%description -n python-pyewf -l pl.UTF-8
-Wiązania Pythona 2 do biblioteki libewf.
 
 %package -n python3-pyewf
 Summary:	Python 3 bindings for libewf library
@@ -203,8 +189,8 @@ Wiązania Pythona 3 do biblioteki libewf.
 %{__autoheader}
 %{__automake}
 %configure \
-	%{?with_python2:--enable-python2} \
-	%{?with_python3:--enable-python3}
+	PYTHON_VERSION=3 \
+	%{?with_python3:--enable-python}
 %{__make}
 
 %install
@@ -216,9 +202,6 @@ rm -rf $RPM_BUILD_ROOT
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libewf.la
 
-%if %{with python2}
-%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/pyewf.{la,a}
-%endif
 %if %{with python3}
 %{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/pyewf.{la,a}
 %endif
@@ -264,12 +247,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/ewfmount.1*
 %{_mandir}/man1/ewfrecover.1*
 %{_mandir}/man1/ewfverify.1*
-
-%if %{with python2}
-%files -n python-pyewf
-%defattr(644,root,root,755)
-%attr(755,root,root) %{py_sitedir}/pyewf.so
-%endif
 
 %if %{with python3}
 %files -n python3-pyewf
