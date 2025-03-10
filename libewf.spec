@@ -32,7 +32,7 @@ Summary:	Library to support the Expert Witness Compression Format
 Summary(pl.UTF-8):	Biblioteka obsługująca format Expert Witness Compression Format
 Name:		libewf
 Version:	20240506
-Release:	1
+Release:	2
 License:	LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/libyal/libewf/releases
